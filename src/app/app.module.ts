@@ -9,13 +9,15 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './components/cart/cart.component';
+import { ProductAddComponent } from './components/product-add/product-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
     NotFoundComponent,
-    CartComponent
+    CartComponent,
+    ProductAddComponent
   ],
   imports: [
     BrowserModule,
