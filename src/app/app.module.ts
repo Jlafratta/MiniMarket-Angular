@@ -22,7 +22,8 @@ import { CartComponent } from './components/cart/cart.component';
     AppRoutingModule,
     RouterModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
