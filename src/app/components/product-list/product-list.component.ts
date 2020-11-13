@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { ProductCategory } from 'src/app/models/product-category';
 import { CartService } from 'src/app/services/cart.service';
@@ -12,7 +12,12 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductListComponent implements OnInit {
 
+  @Output()
   productList: Array<Product> = []
+
+
+  productaso = new Product();
+
   categories: Array<ProductCategory> = []
   catFilter: number = 0;
   cartCounter: number = 0;
@@ -34,6 +39,10 @@ export class ProductListComponent implements OnInit {
       .catch(error => {
         alert('Category service error: ' + error.status);
       });
+  }
+
+  showProductaso(product: Product) {
+    this.productaso = product;
   }
 
   getAll() {
@@ -74,5 +83,7 @@ export class ProductListComponent implements OnInit {
     this.cartService.add(product);
     this.cartCounter = this.cartService.count();
   }
+
+
 
 }
