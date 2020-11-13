@@ -36,9 +36,11 @@
             <div class="card-header">
                <strong> # {{ product.productId }}</strong> | {{ product.name }} ({{ product.productCategoryId }})
                
+               
             </div>
             <div class="card-body">
                 {{ product.description }}
+                <a [routerLink]="['/product/', product.productId]"><button class="btn btn-warning btn-sm">Details</button></a>
             </div>
             <div class="card-footer d-flex justify-content-between">
                 <div class="text-success">$ {{ product.price }}</div>
@@ -54,5 +56,5 @@
 
 -----------------------------
 
-<app-product-view (selectedProductEvent)="showProductaso($event)"></app-product-view>
-{{ productaso.name }}
+<!-- <app-product-view (selectedProductEvent)="showProductaso($event)"></app-product-view>
+{{ productaso.name }} -->

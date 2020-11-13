@@ -72,7 +72,7 @@ export class ProductListComponent implements OnInit {
   filter(){
     this.catFilter = Number(this.catFilter);
 
-    if(this.catFilter > 0) {
+    if(this.catFilter) {
       this.getFiltered();
     }else {
       this.getAll();
@@ -83,7 +83,5 @@ export class ProductListComponent implements OnInit {
     this.cartService.add(product);
     this.cartCounter = this.cartService.count();
   }
-
-
 
 }

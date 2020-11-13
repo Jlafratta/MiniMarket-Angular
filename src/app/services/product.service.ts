@@ -7,22 +7,68 @@ import { Product } from '../models/product';
 })
 export class ProductService {
 
-  private apiURL = 'https://utn-avanzada2-tp-final.herokuapp.com/api/Product';
+  private apiURL = 'https://utn-avanzada2-tp-final.herokuapp.com/api/Product/';
   private loginURL = 'https://utn-avanzada2-tp-final.herokuapp.com/api/User/Login';
+
+  prodFiltered: Array<Product> = [];
+  prod: Product = new Product();
 
   constructor(private http: HttpClient) { }
 
-  async getAll(): Promise<any>{
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization' : await this.GetToken()
+  getByName(name: string): Promise<any> {
+    return this.getAll()
+      .then( response => {
+        return response.find( product => product.name === name );
       })
-    }
+      .catch( error => {
+        alert("Get by name error:");
+      })
+  }
 
-    return this.http.get(this.apiURL, httpOptions)
+  /**
+   * Get Product by id
+   */
+  async getById(id: number) {
+    return this.getAll()
+      .then( response => {
+        return response.find( product => product.productId === id );
+      })
+      .catch( error => {
+        alert("Get by id error: " + error.status);
+      })
+  }
+
+  /**
+   * Get all products
+   */
+  getAll(): Promise<any>{
+
+    return this.http.get(this.apiURL)
       .toPromise();
   }
 
+  /**
+   * Get Product by category
+   * @param id 
+   */
+  getByCategory(id: number){
+    this.getAll()
+      .then( response => {
+        this.prodFiltered = response.filter( product => {
+          return product.productCategoryId === id;
+        });
+      })
+      .catch( error => {
+        alert("Product service error: " + error.status);
+      });
+
+      return this.prodFiltered;
+  }
+
+  /**
+   * Add a product
+   * @param product 
+   */
   async add(product: Product): Promise<any>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -31,7 +77,35 @@ export class ProductService {
       })
     }
 
-    this.http.post(this.apiURL, product, httpOptions)
+    return this.http.post(this.apiURL, product, httpOptions)
+      .toPromise();
+  }
+
+  /**
+   * Update a product
+   * @param product 
+   */
+  async update(product: Product): Promise<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'Authorization' : await this.GetToken()
+      })
+    }
+
+    return this.http.put(this.apiURL, product, httpOptions)
+      .toPromise();
+  }
+
+  async delete(id: Number): Promise<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'Authorization' : await this.GetToken()
+      })
+    }
+
+    return this.http.delete(this.apiURL + id, httpOptions)
       .toPromise();
   }
 

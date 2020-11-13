@@ -1,2 +1,88 @@
-<button (click)="selectProduct()"> show</button>
+<div class="container mt-3">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <form [formGroup]="productForm" (ngSubmit)="editProduct()">
+                        <div class="card-header">
+                            <h3>Product info</h3>
+                            <button type="button" (click)="deleteProduct()">delete</button>
+                        </div>
+                        <div class="row d-flex justify-content-lg-around mt-3">
+                            <div class="col-md-6">
 
+                               
+
+                                <div class="form-group" >
+                                    <label for="name">Title</label>
+                                    <input type="text" formControlName="name" class="form-control" [readonly]="!edit">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="price">Price</label>
+                                    <input type="text" formControlName="price" class="form-control" [readonly]="!edit">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select  formControlName="categoryId" class="form-control" *ngIf="edit"> 
+                                        <option *ngFor="let cat of categories" [ngValue]="cat.productCategoryId" >{{ cat.description }}</option>
+                                    </select>
+                                    <p *ngIf="!edit">cat 1</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea type="text" formControlName="description"
+                                        class="form-control" rows="8" [readonly]="!edit"> </textarea>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="container mt-3" *ngIf="!edit">
+                                <button type="button" class="btn btn-primary btn-block" (click)="switchEdit()">
+                                    <span> Edit</span>
+                                </button>
+                            </div>
+
+                            <div class="container mt-3" *ngIf="edit">
+                                <button type="submit" class="btn btn-primary btn-block"
+                                [disabled]="!productForm.valid">Update</button>
+                            </div>
+
+                            <!-- VALIDACION DE ERRORES DEL FORM PARA ATTR NAME -->
+                            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+
+                                <div *ngIf="name.errors.required">
+                                    El titulo es requerido
+                                </div>
+                                <div *ngIf="name.errors.minlength">
+                                    El minimo de letras para el titulo es 10
+                                </div>
+                                <div *ngIf="name.errors?.lettersOnly">
+                                    Solo letras al nombre
+                                </div>
+                                <div *ngIf="name.errors?.nameExists">
+                                    el nombre ya existe
+                                </div>
+                                
+                            </div>
+
+                            <div *ngIf="description.invalid && (description.dirty || description.touched)">
+
+                                <div *ngIf="description.errors?.forbiddenWords">
+                                    La palabra {{ description.value }} no esta permitida
+                                </div>
+
+                            </div>
+                            
+                            {{ message }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

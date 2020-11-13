@@ -46,8 +46,8 @@ export class ProductAddComponent implements OnInit {
   add() {
     let product = new Product();
     product.productId = 0;
-    product.productTypeId = this.categoryId.value;
-    product.productTypeId = 2;
+    // product.productCategoryId = this.categoryId.value;
+    product.productCategoryId = 2;
     product.name = this.name.value;
     product.description = this.description.value;
     product.price = Number(this.price.value);
